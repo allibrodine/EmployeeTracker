@@ -4,6 +4,13 @@ const cTable = require('console.table');
 
 db.connect(function(err) {
     if (err) throw err;
+
+    console.log(`
+    ================
+    EMPLOYEE TRACKER
+    ================
+    `);
+
     promptUser();
 });
 
@@ -70,30 +77,81 @@ const addEmployee = () => {
             type: 'list',
             name: 'employee_role',
             message: "What is the employee's title?",
-            choices: ['On-Air Talent', 'Sound Engineer', 'Promotions Director', 'Promotions Coordinator', 'Director of Sales', 'Account Executive', 'Program Director', 'On-Site Engineer']
+            choices: [
+                {
+                name:'On-Air Talent', 
+                value: 1 
+                },
+                {
+                name: 'Sound Engineer', 
+                value: 2
+                }, 
+                {
+                name: 'Promotions Director',
+                value: 3, 
+                },
+                {
+                name: 'Promotions Coordinator',
+                value: 4
+                },
+                {
+                name: 'Director of Sales',
+                value: 5
+                },
+                {   
+                name: 'Account Executive',
+                value: 6
+                },
+                { 
+                name: 'Program Director',
+                value: 7
+                },
+                {
+                name:'On-Site Engineer',
+                value: 8 
+            }]
         },
         {
             type: 'list',
             name: 'manager',
             message: "Who is the employee's manager?",
-            choices: ['Duane Dohery', 'Tracy Martin', 'Melissa Weishaupt', 'Anthony Schnurr', 'None']
+            choices: [
+                {
+                name: 'Duane Dohery',
+                value: 1
+                },
+                {
+                name: 'Tracy Martin',
+                value: 2
+                },
+                { 
+                name: 'Melissa Weishaupt',
+                value: 3
+                },
+                {
+                name: 'Anthony Schnurr',
+                value: 4
+                }, 
+                {
+                name: 'None',
+                value: 5
+            }]
         }
     ])
-    // .then(answers => {
-    //     const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)`;
-    //     const params = [answers.first_name, answers.last_name, answers.employee_role, answers.manager];
+    .then(answers => {
+        const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)`;
+        const params = [answers.first_name, answers.last_name, answers.employee_role, answers.manager];
 
-    //     db.query(sql, params, (err, res) => {
-    //         if (err) {
-    //             res.status(400).json({ error: err.message });
-    //             return;
-    //         }
-    //         res.json({
-    //             message: 'Added employee to database.',
-    //             data: answers
-    //         });
-    //     });
-    // });
+        db.query(sql, params, (err, res) => {
+            if (err) {
+               console.log(err, 'Error updating employee.');
+               return;
+            }
+            console.table('Employee added successfully!');
+            promptUser();
+            });
+
+        });       
 };
 
 const updateEmployee = () => {
@@ -102,26 +160,81 @@ const updateEmployee = () => {
             type: 'list',
             name: 'employee',
             message: 'Which employee would you like to update?',
-            choices: ['Duane Doherty', 'Alan Ayo', 'Melissa Weishaupt', 'Alli Brodine', 'Tracy Taylor', 'Liz Nelson', 'Anthony Schnurr', 'Chris Spinks']
+            choices: [
+                {
+                name: 'Duane Dohery',
+                value: 1
+                },
+                {
+                name: 'Tracy Martin',
+                value: 2
+                },
+                { 
+                name: 'Melissa Weishaupt',
+                value: 3
+                },
+                {
+                name: 'Anthony Schnurr',
+                value: 4
+                }, 
+                {
+                name: 'None',
+                value: 5
+                }]
         },
         {
             type: 'list',
             name: 'title',
             message: 'What role would you like to assign the employee to?',
-            choices: ['On-Air Talent', 'Sound Engineer', 'Promotions Director', 'Promotions Coordinator', 'Director of Sales', 'Account Executive', 'Program Director', 'On-Site Engineer']
+            choices: [
+                {
+                name:'On-Air Talent', 
+                value: 1 
+                },
+                {
+                name: 'Sound Engineer', 
+                value: 2
+                }, 
+                {
+                name: 'Promotions Director',
+                value: 3, 
+                },
+                {
+                name: 'Promotions Coordinator',
+                value: 4
+                },
+                {
+                name: 'Director of Sales',
+                value: 5
+                },
+                {   
+                name: 'Account Executive',
+                value: 6
+                },
+                { 
+                name: 'Program Director',
+                value: 7
+                },
+                {
+                name:'On-Site Engineer',
+                value: 8 
+                }]
         }
     ])
-    // .then(
-    //     db.query(`ALTER TABLE employee
-    //               MODIFY role_id;`,
-                
-    //             function (err, res) {
-    //                 if (err) throw err;
+    .then((answers) => {
+        db.query(`UPDATE employee
+                  SET role_id = ?
+                  WHERE id = ?;`,
 
-    //                 console.table(res);
-    //                 promptUser();
-    //             })
-    // );
+                [answers.employee, answers.title],
+
+                function (err, res) {
+                    if (err) throw err;
+
+                    console.log('Employee updated');
+                    promptUser();
+                })
+            });
 };
 
 const viewRoles = () => {
@@ -152,11 +265,38 @@ const addRole = () => {
             type: 'list',
             name: 'department',
             message: 'What department does this role belong to?',
-            choices: ['Programming', 'Sales', 'Marketing', 'Engineering']
+            choices: [
+                {
+                name: 'Programming',
+                value: 1
+                },
+                {
+                name: 'Sales',
+                value: 2
+                },
+                {
+                name: 'Marketing',
+                value: 3
+                }, 
+                {
+                name: 'Engineering',
+                value: 4
+                }]
         }
     ])
-    .then();
-    //promptUser();
+    .then(answers => {
+        const sql = `INSERT INTO role (title, salary, department_id) VALUES(?,?,?)`;
+        const params = [answers.newRole, answers.salary, answers.department];
+
+        db.query(sql, params, (err, res) => {
+            if (err) {
+               console.log(err, 'Error updating employee role.');
+               return;
+            }
+            console.log('Title added successfully!');
+            promptUser();
+            });
+        });
 };
 
 const viewDept = () => {
@@ -178,10 +318,21 @@ const addDept = () => {
             message: 'What is the name of the new department?'
         }
     ])
-    .then()
-    //promptUser();
+    .then(answers => {
+        const sql = `INSERT INTO department (department_name) VALUES(?)`;
+        const params = [answers.newDept];
+
+        db.query(sql, params, (err, res) => {
+            if (err) {
+               console.log(err, 'Error updating department.');
+               return;
+            }
+            console.table('Department added successfully!');
+            promptUser();
+            });
+        });
 };
 
 const quit = () => {
-    
+    process.exit(0);
 };
