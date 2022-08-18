@@ -1,7 +1,11 @@
+//use inquirer
 const inquirer = require('inquirer');
+//use connection file
 const db = require('./db/connection');
+//use console.table
 const cTable = require('console.table');
 
+//connect to database to start app
 db.connect(function(err) {
     if (err) throw err;
 
@@ -14,17 +18,19 @@ db.connect(function(err) {
     promptUser();
 });
 
+//list of user options
 const promptUser = () => {
     inquirer.prompt([
         {
             type: 'list',
             name: 'choice',
             message: 'What would you like to do?',
-            choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add Department', 'Quit']
+            choices: ['View All Employees', 'Add Employee', 'Update Employee Role', 'Delete Employee', 'View All Roles', 'Add Role', 'Delete Role', 'View All Departments', 'Add Department', 'Delete Department', 'Quit']
         },
         ]
     )
     .then((response) => {
+        //switch function for options, call function for selected option
         switch(response.choice) {
             case 'View All Employees': viewEmployees();
             break;
@@ -32,13 +38,19 @@ const promptUser = () => {
             break;
             case "Update Employee Role": updateEmployee();
             break;
+            case "Delete Employee": deleteEmp();
+            break;
             case "View All Roles": viewRoles();
             break;
             case "Add Role": addRole();
             break;
+            case "Delete Role": deleteRole();
+            break;
             case "View All Departments": viewDept();
             break;
             case "Add Department": addDept();
+            break;
+            case "Delete Department": deleteDept();
             break;
             case "Quit": quit();
         };
@@ -79,37 +91,37 @@ const addEmployee = () => {
             message: "What is the employee's title?",
             choices: [
                 {
-                name:'On-Air Talent', 
-                value: 1 
+                    name:'On-Air Talent', 
+                    value: 1 
                 },
                 {
-                name: 'Sound Engineer', 
-                value: 2
+                    name: 'Sound Engineer', 
+                    value: 2
                 }, 
                 {
-                name: 'Promotions Director',
-                value: 3, 
+                    name: 'Promotions Director',
+                    value: 3, 
                 },
                 {
-                name: 'Promotions Coordinator',
-                value: 4
+                    name: 'Promotions Coordinator',
+                    value: 4
                 },
                 {
-                name: 'Director of Sales',
-                value: 5
+                    name: 'Director of Sales',
+                    value: 5
                 },
                 {   
-                name: 'Account Executive',
-                value: 6
+                    name: 'Account Executive',
+                    value: 6
                 },
                 { 
-                name: 'Program Director',
-                value: 7
+                    name: 'Program Director',
+                    value: 7
                 },
                 {
-                name:'On-Site Engineer',
-                value: 8 
-            }]
+                    name:'On-Site Engineer',
+                    value: 8 
+                }]
         },
         {
             type: 'list',
@@ -117,25 +129,25 @@ const addEmployee = () => {
             message: "Who is the employee's manager?",
             choices: [
                 {
-                name: 'Duane Dohery',
-                value: 1
+                    name: 'Duane Dohery',
+                    value: 1
                 },
                 {
-                name: 'Tracy Martin',
-                value: 2
+                    name: 'Tracy Martin',
+                    value: 2
                 },
                 { 
-                name: 'Melissa Weishaupt',
-                value: 3
+                    name: 'Melissa Weishaupt',
+                    value: 3
                 },
                 {
-                name: 'Anthony Schnurr',
-                value: 4
+                    name: 'Anthony Schnurr',
+                    value: 4
                 }, 
                 {
-                name: 'None',
-                value: 5
-            }]
+                    name: 'None',
+                    value: 5
+                }]
         }
     ])
     .then(answers => {
@@ -162,24 +174,36 @@ const updateEmployee = () => {
             message: 'Which employee would you like to update?',
             choices: [
                 {
-                name: 'Duane Dohery',
-                value: 1
+                    name: 'Duane Dohery',
+                    value: 1
                 },
                 {
-                name: 'Tracy Martin',
-                value: 2
+                    name: 'Tracy Martin',
+                    value: 2
                 },
                 { 
-                name: 'Melissa Weishaupt',
-                value: 3
+                    name: 'Melissa Weishaupt',
+                    value: 3
                 },
                 {
-                name: 'Anthony Schnurr',
-                value: 4
+                    name: 'Anthony Schnurr',
+                    value: 4
                 }, 
                 {
-                name: 'None',
-                value: 5
+                    name: 'Alan Ayo',
+                    value: 5
+                },
+                {
+                    name: 'Alli Brodine',
+                    value: 6
+                },
+                {
+                    name: 'Liz Nelson',
+                    value: 7
+                },
+                {
+                    name: 'Chris Spinks',
+                    value: 8
                 }]
         },
         {
@@ -188,36 +212,36 @@ const updateEmployee = () => {
             message: 'What role would you like to assign the employee to?',
             choices: [
                 {
-                name:'On-Air Talent', 
-                value: 1 
+                    name:'On-Air Talent', 
+                    value: 1 
                 },
                 {
-                name: 'Sound Engineer', 
-                value: 2
+                    name: 'Sound Engineer', 
+                    value: 2
                 }, 
                 {
-                name: 'Promotions Director',
-                value: 3, 
+                    name: 'Promotions Director',
+                    value: 3, 
                 },
                 {
-                name: 'Promotions Coordinator',
-                value: 4
+                    name: 'Promotions Coordinator',
+                    value: 4
                 },
                 {
-                name: 'Director of Sales',
-                value: 5
+                    name: 'Director of Sales',
+                    value: 5
                 },
                 {   
-                name: 'Account Executive',
-                value: 6
+                    name: 'Account Executive',
+                    value: 6
                 },
                 { 
-                name: 'Program Director',
-                value: 7
+                    name: 'Program Director',
+                    value: 7
                 },
                 {
-                name:'On-Site Engineer',
-                value: 8 
+                    name:'On-Site Engineer',
+                    value: 8 
                 }]
         }
     ])
@@ -267,20 +291,20 @@ const addRole = () => {
             message: 'What department does this role belong to?',
             choices: [
                 {
-                name: 'Programming',
-                value: 1
+                    name: 'Programming',
+                    value: 1
                 },
                 {
-                name: 'Sales',
-                value: 2
+                    name: 'Sales',
+                    value: 2
                 },
                 {
-                name: 'Marketing',
-                value: 3
+                    name: 'Marketing',
+                    value: 3
                 }, 
                 {
-                name: 'Engineering',
-                value: 4
+                    name: 'Engineering',
+                    value: 4
                 }]
         }
     ])
@@ -331,6 +355,158 @@ const addDept = () => {
             promptUser();
             });
         });
+};
+
+const deleteEmp = () => {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'employee',
+            message: 'Which employee would you like to delete?',
+            choices: [
+                {
+                    name: 'Duane Dohery',
+                    value: 1
+                },
+                {
+                    name: 'Tracy Martin',
+                    value: 2
+                },
+                { 
+                    name: 'Melissa Weishaupt',
+                    value: 3
+                },
+                {
+                    name: 'Anthony Schnurr',
+                    value: 4
+                }, 
+                {
+                    name: 'Alan Ayo',
+                    value: 5
+                },
+                {
+                    name: 'Alli Brodine',
+                    value: 6
+                },
+                {
+                    name: 'Liz Nelson',
+                    value: 7
+                },
+                {
+                    name: 'Chris Spinks',
+                    value: 8
+                }]
+        }
+    ])
+    .then((answers) => {
+        db.query(`DELETE FROM employee
+                  WHERE id = ?;`,
+
+                [answers.employee],
+
+                function (err, res) {
+                    if (err) throw err;
+
+                    console.log('Employee deleted.');
+                    promptUser();
+                })
+            });
+};
+
+const deleteRole = () => {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'title',
+            message: 'Which role would you like to delete?',
+            choices: [
+            {
+                name:'On-Air Talent', 
+                value: 1 
+            },
+            {
+                name: 'Sound Engineer', 
+                value: 2
+            }, 
+            {
+                name: 'Promotions Director',
+                value: 3, 
+            },
+            {
+                name: 'Promotions Coordinator',
+                value: 4
+            },
+            {
+                name: 'Director of Sales',
+                value: 5
+            },
+            {   
+                name: 'Account Executive',
+                value: 6
+            },
+            { 
+                name: 'Program Director',
+                value: 7
+            },
+            {
+                name:'On-Site Engineer',
+                value: 8 
+            }]
+        }
+    ])
+    .then((answers) => {
+        db.query(`DELETE FROM role
+                  WHERE id = ?;`,
+
+                [answers.title],
+
+                function (err, res) {
+                    if (err) throw err;
+
+                    console.log('Role deleted.');
+                    promptUser();
+                })
+            });
+};
+
+const deleteDept = () => {
+    inquirer.prompt([
+            {
+                type: 'list',
+                name: 'department',
+                message: 'What department do you want to delete?',
+                choices: [
+                    {
+                        name: 'Programming',
+                        value: 1
+                    },
+                    {
+                        name: 'Sales',
+                        value: 2
+                    },
+                    {
+                        name: 'Marketing',
+                        value: 3
+                    }, 
+                    {
+                        name: 'Engineering',
+                        value: 4
+                    }]
+            }
+        ])
+        .then((answers) => {
+            db.query(`DELETE FROM department
+                      WHERE id = ?;`,
+    
+                    [answers.department],
+    
+                    function (err, res) {
+                        if (err) throw err;
+    
+                        console.log('Department deleted.');
+                        promptUser();
+                    })
+                });
 };
 
 const quit = () => {
