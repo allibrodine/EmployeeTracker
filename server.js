@@ -31,6 +31,7 @@ const promptUser = () => {
     )
     .then((response) => {
         //switch function for options, call function for selected option
+
         switch(response.choice) {
             case 'View All Employees': viewEmployees();
             break;
@@ -133,7 +134,7 @@ const addEmployee = () => {
                     value: 1
                 },
                 {
-                    name: 'Tracy Martin',
+                    name: 'Tracy Taylor',
                     value: 2
                 },
                 { 
@@ -178,7 +179,7 @@ const updateEmployee = () => {
                     value: 1
                 },
                 {
-                    name: 'Tracy Martin',
+                    name: 'Tracy Taylor',
                     value: 2
                 },
                 { 
@@ -255,7 +256,7 @@ const updateEmployee = () => {
                 function (err, res) {
                     if (err) throw err;
 
-                    console.log('Employee updated');
+                    console.log('Employee updated.');
                     promptUser();
                 })
             });
@@ -369,7 +370,7 @@ const deleteEmp = () => {
                     value: 1
                 },
                 {
-                    name: 'Tracy Martin',
+                    name: 'Tracy Taylor',
                     value: 2
                 },
                 { 

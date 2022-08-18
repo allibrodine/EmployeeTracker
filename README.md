@@ -29,13 +29,15 @@ Have your own employee database with this Employee Tracker application. View, ed
 *  Download and install <a href = "https://coding-boot-camp.github.io/full-stack/nodejs/how-to-install-nodejs">Node.js</a> if you don't have it already. Choose the LTS, Long Term Support, version.  
 * Run "npm install" from the command line.
 * To install <a href="https://www.npmjs.com/package/inquirer/v/8.2.4">Inquirer</a>, run "npm i inquirer@8.2.4" from the command line.
-* And lastly, install <a hreft="https://www.npmjs.com/package/console.table">Console Table</a> by running "npm in console.table" from the command line.
+* And lastly, install <a href="https://www.npmjs.com/package/console.table">Console Table</a> by running "npm in console.table" from the command line.
 
 ## Usage
 
 Run "node server" from the command line and choose from the list of options. When you are done, simply select "Quit."
 
 ## Demo
+
+[EmployeeTracker.webm](https://user-images.githubusercontent.com/105396175/185514072-98b8e445-59b9-4ee7-9fc5-a8bba3848e4f.webm)
 
 ## Collaboration
 
